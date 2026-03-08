@@ -6,6 +6,9 @@ A hybrid local-first desktop media application built with Tauri, React, and a he
 
 Delulu is a performance-focused desktop application designed to scrape, extract, and stream media content (Movies and TV Shows) directly on the client machine. The core philosophy of the application is to bypass unreliable third-party streaming APIs by securely orchestrating a hidden headless browser locally on the user's PC. This ensures that the application resolves stream URLs dynamically and seamlessly handles HLS proxying and local caching without depending on an external centralized server for media extraction.
 
+> [!IMPORTANT]
+> **Note on Content Availability:** Delulu does not host, store, or provide any media content directly. It functions strictly as a technical orchestration tool that extracts streaming assets from external third-party providers. Consequently, the availability of any specific movie or show depends entirely on those external sources; if a title is not indexed or available on the underlying provider, the application will not be able to resolve or play the stream.
+
 ## Screenshots
 
 <p align="center">
