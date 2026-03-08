@@ -182,6 +182,9 @@ See [docs/usage.md](docs/usage.md) for more details.
 ## Contributing
 Contributions are what make the open-source community such an amazing place! Any contributions you make are **greatly appreciated**.
 
+> [!TIP]
+> **We are actively looking for new provider integrations!** If you have experience with Puppeteer and would like to help expand Delulu's reach by adding new extraction sources, please check out our [CONTRIBUTING.md](CONTRIBUTING.md).
+
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
