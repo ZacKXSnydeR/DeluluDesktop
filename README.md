@@ -31,8 +31,11 @@ Delulu is a performance-focused desktop application designed to scrape, extract,
 </p>
 
 <p align="center">
-  <img src="photos/random.png" width="45%" alt="Randomizer Feature" />
-  <img src="photos/movies (2).png" width="45%" alt="Alternative Movies View" />
+  <img src="photos/random.png" width="95%" alt="Randomizer Feature" />
+</p>
+
+<p align="center">
+  <img src="photos/movies (2).png" width="95%" alt="Alternative Movies View" />
 </p>
 
 ## Key Features
