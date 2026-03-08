@@ -1,0 +1,105 @@
+/* =========================
+   MINI PLAYER (YouTube-style)
+========================= */
+.mini-player {
+    position: fixed;
+    z-index: 9999;
+    width: 360px;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    animation: miniPlayerSlideIn 0.3s ease;
+}
+
+.mini-player-dragging {
+    cursor: grabbing;
+    user-select: none;
+}
+
+@keyframes miniPlayerSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Header - Drag handle */
+.mini-player-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.9);
+    cursor: grab;
+}
+
+.mini-player-header:active {
+    cursor: grabbing;
+}
+
+.mini-player-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.mini-player-header-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.mini-player-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.mini-player-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+/* Video container */
+.mini-player-video-container {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    cursor: pointer;
+}
+
+.mini-player-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Play overlay */
+.mini-player-play-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Hover effect */
+.mini-player:hover {
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.15);
+}

@@ -1,0 +1,31 @@
+{
+  "name": "local-extractor",
+  "version": "1.0.0",
+  "description": "Local-first HLS extractor for Tauri desktop apps",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "bin": {
+    "local-extractor": "cli.js",
+    "local-extractor-stdio": "stdio-bridge.js"
+  },
+  "scripts": {
+    "extract": "node cli.js extract",
+    "stdio": "node stdio-bridge.js",
+    "check": "node --check cli.js && node --check stdio-bridge.js && node --check src/index.js && node --check src/extractor.js"
+  },
+  "keywords": [
+    "hls",
+    "m3u8",
+    "tauri",
+    "local",
+    "extractor",
+    "puppeteer"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "puppeteer": "^23.0.0"
+  }
+}

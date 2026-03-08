@@ -1,0 +1,831 @@
+/* ========================================
+   DELULU PROFESSIONAL VIDEO PLAYER
+   Minimalist Dark UI - #000000 & #121212
+======================================== */
+
+.delulu-player {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+    user-select: none;
+    cursor: none;
+}
+
+.delulu-player.show-controls {
+    cursor: default;
+}
+
+/* ----------------------------------------
+   VIDEO ELEMENT
+---------------------------------------- */
+.delulu-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+    transition: filter 0.25s ease, transform 0.25s ease;
+}
+
+.delulu-player.is-paused .delulu-video {
+    filter: blur(6px) brightness(0.65);
+    transform: scale(1.02);
+}
+
+/* Subtitle styling via ::cue */
+.delulu-video::cue {
+    font-size: var(--subtitle-font-size, 22px);
+    color: var(--subtitle-color, #ffffff);
+    background: rgba(0, 0, 0, var(--subtitle-bg-opacity, 0.75));
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* ----------------------------------------
+   GRADIENTS (TOP & BOTTOM)
+---------------------------------------- */
+.delulu-gradient-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.7) 0%,
+            rgba(0, 0, 0, 0.3) 50%,
+            transparent 100%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.delulu-gradient-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.9) 0%,
+            rgba(0, 0, 0, 0.5) 40%,
+            transparent 100%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.delulu-player.show-controls .delulu-gradient-top,
+.delulu-player.show-controls .delulu-gradient-bottom {
+    opacity: 1;
+}
+
+/* ----------------------------------------
+   EDGE-HOVER TITLEBAR (Window Controls)
+---------------------------------------- */
+.delulu-titlebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    -webkit-app-region: drag;
+}
+
+.delulu-player.show-controls .delulu-titlebar {
+    opacity: 1;
+}
+
+.delulu-titlebar-drag {
+    position: absolute;
+    inset: 0;
+    -webkit-app-region: drag;
+}
+
+.delulu-titlebar-controls {
+    display: flex;
+    height: 100%;
+    -webkit-app-region: no-drag;
+    z-index: 10;
+}
+
+.delulu-titlebar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 100%;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    -webkit-app-region: no-drag;
+}
+
+.delulu-titlebar-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+.delulu-titlebar-close:hover {
+    background: #e81123;
+    color: #fff;
+}
+
+.delulu-titlebar-btn svg {
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+}
+
+/* ----------------------------------------
+   TOP BAR
+---------------------------------------- */
+.delulu-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    z-index: 20;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    -webkit-app-region: drag;
+    /* Allow window dragging from top bar */
+}
+
+.delulu-player.show-controls .delulu-top-bar {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delulu-back-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-app-region: no-drag;
+    /* Make button clickable */
+}
+
+.delulu-back-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+.delulu-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: -0.01em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ----------------------------------------
+   PAUSE OVERLAY CARD
+---------------------------------------- */
+.delulu-pause-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 80px;
+    z-index: 15;
+    pointer-events: none;
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
+    animation: delulu-pause-overlay-in 220ms ease-out;
+}
+
+.delulu-pause-card {
+    width: min(760px, 100%);
+    display: flex;
+    align-items: stretch;
+    gap: 42px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    backdrop-filter: none;
+    box-shadow: none;
+    pointer-events: auto;
+    animation: delulu-pause-card-in 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.delulu-pause-poster {
+    width: 220px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.58);
+    flex-shrink: 0;
+    animation: delulu-pause-poster-in 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.delulu-pause-content {
+    flex: 1;
+    min-width: 0;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    text-align: right;
+    max-width: 430px;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    animation: delulu-pause-content-in 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes delulu-pause-overlay-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes delulu-pause-card-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes delulu-pause-poster-in {
+    from {
+        opacity: 0;
+        transform: translateX(-10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes delulu-pause-content-in {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.delulu-pause-title {
+    margin: 0;
+    font-size: clamp(36px, 4.1vw, 52px);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    padding-bottom: 2px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.delulu-pause-meta {
+    margin: 12px 0 0;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 500;
+}
+
+.delulu-pause-status {
+    margin: 0 0 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.delulu-pause-upnext {
+    margin: 10px 0 0;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.88);
+    font-weight: 600;
+}
+
+.delulu-pause-genre {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.62);
+    font-weight: 500;
+}
+
+.delulu-pause-stats {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.82);
+    justify-content: flex-end;
+}
+
+.delulu-pause-stats span {
+    white-space: nowrap;
+}
+
+.delulu-next-episode-btn {
+    margin-top: 18px;
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.delulu-next-episode-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.34);
+    transform: translateY(-1px);
+}
+
+/* ----------------------------------------
+   BUFFERING SPINNER
+---------------------------------------- */
+.delulu-buffering {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.delulu-buffering-spinner {
+    width: 48px;
+    height: 48px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-top-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: delulu-spin 0.8s linear infinite;
+}
+
+@keyframes delulu-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ----------------------------------------
+   BOTTOM CONTROLS
+---------------------------------------- */
+.delulu-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 24px 20px;
+    z-index: 20;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.delulu-player.show-controls .delulu-controls {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ----------------------------------------
+   PROGRESS BAR
+---------------------------------------- */
+.delulu-progress {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    cursor: pointer;
+    margin-bottom: 14px;
+    transition: height 0.15s ease;
+}
+
+.delulu-progress:hover {
+    height: 6px;
+}
+
+.delulu-progress-buffered {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 2px;
+    transition: width 0.1s linear;
+}
+
+.delulu-progress-played {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #fff;
+    border-radius: 2px;
+    transition: width 0.05s linear;
+}
+
+.delulu-progress-scrubber {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.delulu-progress:hover .delulu-progress-scrubber {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.delulu-progress-hover {
+    position: absolute;
+    bottom: 16px;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 4px;
+    font-size: 12px;
+    color: #fff;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* ----------------------------------------
+   CONTROL BAR
+---------------------------------------- */
+.delulu-control-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.delulu-controls-left,
+.delulu-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Control Button */
+.delulu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.delulu-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.delulu-btn.active {
+    color: #ff4d4d;
+}
+
+/* Volume Slider */
+.delulu-volume {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.delulu-volume-slider {
+    width: 0;
+    opacity: 0;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    accent-color: #fff;
+}
+
+.delulu-volume:hover .delulu-volume-slider {
+    width: 70px;
+    opacity: 1;
+}
+
+/* Time Display */
+.delulu-time {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    font-variant-numeric: tabular-nums;
+    margin-left: 8px;
+}
+
+/* Quality Badge */
+.delulu-quality-badge {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    margin-left: 2px;
+}
+
+/* ----------------------------------------
+   SETTINGS/SUBTITLE PANELS
+---------------------------------------- */
+.delulu-panel {
+    position: absolute;
+    bottom: 80px;
+    right: 24px;
+    min-width: 180px;
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 30;
+    animation: delulu-panel-in 0.2s ease;
+}
+
+@keyframes delulu-panel-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.delulu-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.delulu-panel-header button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.delulu-panel-header button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.delulu-panel-options {
+    padding: 8px 0;
+}
+
+.delulu-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: left;
+}
+
+.delulu-option:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+}
+
+.delulu-option.active {
+    color: #ff4d4d;
+}
+
+/* Subtitle Customization */
+.delulu-subtitle-customize {
+    padding: 12px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.delulu-customize-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.delulu-customize-row:last-child {
+    margin-bottom: 0;
+}
+
+.delulu-customize-row label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    min-width: 70px;
+}
+
+.delulu-customize-row input[type="range"] {
+    flex: 1;
+    height: 3px;
+    accent-color: #e50914;
+    cursor: pointer;
+}
+
+.delulu-customize-row span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    min-width: 40px;
+    text-align: right;
+}
+
+/* ----------------------------------------
+   RESPONSIVE
+---------------------------------------- */
+@media (max-width: 768px) {
+    .delulu-top-bar {
+        padding: 16px 16px;
+    }
+
+    .delulu-controls {
+        padding: 0 16px 16px;
+    }
+
+    .delulu-pause-overlay {
+        padding: 20px;
+    }
+
+    .delulu-pause-card {
+        width: 100%;
+        gap: 14px;
+    }
+
+    .delulu-pause-poster {
+        width: 112px;
+        height: 156px;
+    }
+
+    .delulu-pause-title {
+        font-size: 26px;
+        line-height: 1.08;
+    }
+
+    .delulu-pause-meta {
+        margin-top: 8px;
+        font-size: 14px;
+    }
+
+    .delulu-pause-status {
+        margin-bottom: 6px;
+        font-size: 11px;
+    }
+
+    .delulu-pause-upnext {
+        margin-top: 8px;
+        font-size: 12px;
+    }
+
+    .delulu-pause-genre {
+        margin-top: 4px;
+        font-size: 12px;
+    }
+
+    .delulu-pause-stats {
+        gap: 8px;
+        font-size: 12px;
+        flex-direction: column;
+    }
+
+    .delulu-next-episode-btn {
+        margin-top: 16px;
+        font-size: 13px;
+        padding: 9px 16px;
+    }
+
+    .delulu-pause-content {
+        min-height: 156px;
+        padding: 0;
+        border-radius: 0;
+    }
+
+    .delulu-control-bar {
+        gap: 8px;
+    }
+
+    .delulu-btn {
+        padding: 6px;
+    }
+
+    .delulu-time {
+        font-size: 11px;
+    }
+
+    .delulu-panel {
+        right: 16px;
+        min-width: 160px;
+    }
+}
+
+/* ----------------------------------------
+   CUSTOM SUBTITLE OVERLAY
+---------------------------------------- */
+.delulu-subtitle-overlay {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 80%;
+    text-align: center;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    line-height: 1.5;
+    pointer-events: none;
+    z-index: 20;
+    transition: opacity 0.15s ease;
+}
+
+/* Download spinner in player controls */
+.delulu-download-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: delulu-spin 0.7s linear infinite;
+}
+
+@keyframes delulu-spin {
+    to { transform: rotate(360deg); }
+}
+
+.delulu-btn.downloading {
+    opacity: 0.7;
+    cursor: wait;
+}

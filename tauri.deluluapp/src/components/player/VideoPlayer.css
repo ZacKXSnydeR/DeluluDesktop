@@ -1,0 +1,262 @@
+/* =========================
+   ROOT PLAYER
+========================= */
+.video-player {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #000;
+  overflow: hidden;
+}
+
+.video-player-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.video-player-hide-cursor {
+  cursor: none;
+}
+
+/* =========================
+   OVERLAY (GRADIENT)
+========================= */
+.video-player-controls {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.15) 18%,
+    rgba(0, 0, 0, 0.15) 70%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  opacity: 1;
+  transition: opacity 0.35s ease;
+  z-index: 10;
+}
+
+.video-player-controls-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+.video-player-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 72px 56px 24px;
+}
+
+.video-player-back {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.video-player-back:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.05);
+}
+
+.video-player-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.4px;
+  text-shadow: 0 4px 16px rgba(0,0,0,0.8);
+}
+
+/* =========================
+   CENTER CONTROLS
+========================= */
+.video-player-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+.video-player-skip {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: white;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.video-player-skip:hover {
+  background: rgba(255,255,255,0.18);
+  transform: scale(1.08);
+}
+
+.video-player-play-btn {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(28px);
+  border: 2px solid rgba(255,255,255,0.3);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.55);
+  transition: all 0.25s ease;
+}
+
+.video-player-play-btn:hover {
+  transform: scale(1.06);
+  background: rgba(255,255,255,0.28);
+}
+
+/* =========================
+   BOTTOM CONTROLS
+========================= */
+.video-player-bottom {
+  padding: 0 56px 36px;
+}
+
+/* Progress bar */
+.video-player-progress {
+  position: relative;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 999px;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+
+.video-player-progress:hover {
+  height: 6px;
+}
+
+.video-player-progress-buffered {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: rgba(255,255,255,0.35);
+}
+
+.video-player-progress-played {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: var(--color-accent-primary);
+  box-shadow: 0 0 12px var(--color-accent-glow);
+}
+
+.video-player-progress-thumb {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-accent-primary);
+  border: 2px solid #fff;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.15s ease;
+}
+
+.video-player-progress:hover .video-player-progress-thumb {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* =========================
+   CONTROL ROW
+========================= */
+.video-player-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.video-player-left-controls,
+.video-player-right-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.video-player-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.9);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.video-player-btn:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* Volume */
+.video-player-volume {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.video-player-volume-slider {
+  width: 90px;
+  height: 4px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* Time */
+.video-player-time {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================
+   BUFFERING
+========================= */
+.video-player-buffering {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 30;
+}
+
+.video-player-spinner {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.15);
+  border-top-color: var(--color-accent-primary);
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Fullscreen spacing fix */
+.video-player:fullscreen .video-player-top {
+  padding-top: 32px;
+}

@@ -1,0 +1,294 @@
+/* ============================================
+   CONTENT GRID - Netflix Premium Style
+   ============================================ */
+
+.content-grid {
+    padding: 56px 48px 80px;
+    max-width: 2000px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   HEADER - Premium Typography
+   ============================================ */
+
+.content-grid-header {
+    margin-bottom: 40px;
+    animation: fadeInDown 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-grid-title {
+    font-size: 42px;
+    font-weight: 700;
+    background: linear-gradient(to right, #ffffff 0%, rgba(255, 255, 255, 0.85) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 12px 0;
+    letter-spacing: -1.2px;
+    line-height: 1.1;
+}
+
+.content-grid-subtitle {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    margin: 0 0 16px 0;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+}
+
+.content-grid-stats {
+    margin-top: 12px;
+}
+
+.content-grid-count {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+}
+
+/* ============================================
+   CARD GRID - Bigger Cards, Better Spacing
+   ============================================ */
+
+.content-grid-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(clamp(140px, 13.5vw, 220px), 1fr));
+    gap: clamp(14px, 1.5vw, 24px);
+    animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s backwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Skeleton cards */
+.content-grid-items .skeleton-card {
+    aspect-ratio: 2/3;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.03) 0%,
+            rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    animation: skeletonPulse 2s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* ============================================
+   VIEW MORE BUTTON - Premium Design
+   ============================================ */
+
+.content-grid-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.btn-load-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 40px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shine effect */
+.btn-load-more::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 100%);
+    transition: left 0.6s ease;
+}
+
+.btn-load-more:hover::before {
+    left: 100%;
+}
+
+.btn-load-more:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+.btn-load-more:active {
+    transform: translateY(0);
+}
+
+.btn-load-more:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Icon animation */
+.btn-load-more svg {
+    transition: transform 0.3s ease;
+}
+
+.btn-load-more:hover svg {
+    transform: translateY(2px);
+}
+
+/* ============================================
+   RESPONSIVE - Optimized for All Screens
+   ============================================ */
+
+/* Large desktop (2K+) - Netflix-style 6-7 columns */
+@media (min-width: 1920px) {
+    .content-grid-items {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 28px;
+    }
+
+    .content-grid-title {
+        font-size: 48px;
+    }
+}
+
+/* Desktop (1200-1920px) - 5-6 columns */
+@media (min-width: 1200px) and (max-width: 1919px) {
+    .content-grid-items {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 26px;
+    }
+}
+
+/* Laptop (1024-1199px) - 4-5 columns */
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .content-grid {
+        padding: 48px 40px 60px;
+    }
+
+    .content-grid-items {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 24px;
+    }
+
+    .content-grid-title {
+        font-size: 38px;
+    }
+}
+
+/* Tablet (768-1023px) - 3-4 columns */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .content-grid {
+        padding: 40px 32px 56px;
+    }
+
+    .content-grid-items {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 20px;
+    }
+
+    .content-grid-title {
+        font-size: 34px;
+        letter-spacing: -1px;
+    }
+
+    .content-grid-subtitle {
+        font-size: 15px;
+    }
+}
+
+/* Mobile (< 768px) - 2-3 columns */
+@media (max-width: 767px) {
+    .content-grid {
+        padding: 32px 20px 48px;
+    }
+
+    .content-grid-items {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 16px;
+    }
+
+    .content-grid-title {
+        font-size: 28px;
+        letter-spacing: -0.8px;
+    }
+
+    .content-grid-subtitle {
+        font-size: 14px;
+    }
+
+    .content-grid-count {
+        font-size: 12px;
+        padding: 5px 12px;
+    }
+
+    .btn-load-more {
+        padding: 14px 32px;
+        font-size: 14px;
+    }
+
+    .content-grid-footer {
+        margin-top: 40px;
+    }
+}
