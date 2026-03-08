@@ -9,6 +9,11 @@ Delulu is a performance-focused desktop application designed to scrape, extract,
 > [!IMPORTANT]
 > **Note on Content Availability:** Delulu does not host, store, or provide any media content directly. It functions strictly as a technical orchestration tool that extracts streaming assets from external third-party providers. Consequently, the availability of any specific movie or show depends entirely on those external sources; if a title is not indexed or available on the underlying provider, the application will not be able to resolve or play the stream.
 
+> [!NOTE]
+> **Hobbyist Disclosure & Roadmap:** Delulu started as a "vibe-coded" hobby project built for personal experimentation. As such, you may encounter bugs or rough edges—your patience and understanding are greatly appreciated! 
+> 
+> 🚀 **What's Next?** I am currently working on a **Torrent Streaming capable version** of Delulu to provide even more robust media extraction options. Stay tuned!
+
 ## Screenshots
 
 <p align="center">
