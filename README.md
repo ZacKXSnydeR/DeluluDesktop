@@ -9,13 +9,16 @@ Delulu is a performance-focused desktop application designed to scrape, extract,
 ## Screenshots
 
 <p align="center">
-  <img src="photos/home.png" width="45%" alt="Home Screen" />
-  <img src="photos/movies.png" width="45%" alt="Movies Discovery" />
+  <img src="photos/home.png" width="95%" alt="Home Screen" />
 </p>
 
 <p align="center">
+  <img src="photos/movies.png" width="45%" alt="Movies Discovery" />
   <img src="photos/series.png" width="45%" alt="TV Series Discovery" />
-  <img src="photos/details.png" width="45%" alt="Media Details" />
+</p>
+
+<p align="center">
+  <img src="photos/details.png" width="95%" alt="Media Details" />
 </p>
 
 <p align="center">
@@ -24,12 +27,12 @@ Delulu is a performance-focused desktop application designed to scrape, extract,
 </p>
 
 <p align="center">
-  <img src="photos/pausestate.png" width="45%" alt="Player Pause State" />
-  <img src="photos/random.png" width="45%" alt="Randomizer Feature" />
+  <img src="photos/pausestate.png" width="95%" alt="Player Pause State" />
 </p>
 
 <p align="center">
-  <img src="photos/movies (2).png" width="90%" alt="Alternative Movies View" />
+  <img src="photos/random.png" width="45%" alt="Randomizer Feature" />
+  <img src="photos/movies (2).png" width="45%" alt="Alternative Movies View" />
 </p>
 
 ## Key Features
